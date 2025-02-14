@@ -1,79 +1,53 @@
-# Smart Glove-Based Communication System
+# Gesture Glove Using Flex Sensors
 
-![Project Image](images/glove-setup.jpg)
+## Introduction
+This project focuses on a gesture-controlled glove that uses flex sensors to recognize hand movements and convert them into text and sound using an Arduino-based system. The glove is particularly useful for non-verbal communication and assistive technologies.
 
-## 🔍 Overview
+## Features
+- Recognizes predefined hand gestures.  
+- Displays corresponding text output on an LCD screen.  
+- Provides audio feedback using a buzzer.  
+- Customizable for different gesture-based applications.  
 
-This project implements a **smart glove-based system** that detects finger movements using **flex sensors** and translates them into predefined commands displayed on an **LCD screen**. It also generates audio feedback through a buzzer.
+## Components Used
+- Arduino UNO  
+- Flex Sensors  
+- 16x2 LCD Display  
+- Potentiometer  
+- Buzzer    
 
-## 🛠️ Technologies Used
+## Applications  
+- Assistive technology for people with speech disabilities.  
+- Smart home control using hand gestures.  
+- Gaming & VR interaction.  
+- Industrial machinery control.  
 
-- **Arduino Uno**  
-- **Flex Sensors** (5 – one for each finger)  
-- **Liquid Crystal Display (LCD) 16x2**  
-- **Buzzer** (for feedback)  
-- **Jumper Wires, Resistors, Breadboard** 
-this is for trial
+## Future Improvements  
+- Wireless communication using Bluetooth/WiFi.  
+- More gestures for expanded functionality.  
+- Integration with AI for gesture learning.  
 
-## 📷 Circuit Diagram  
+## How to Use  
+1. **Wear the glove** and bend fingers to form gestures.  
+2. **The LCD displays** the recognized action.  
+3. **The buzzer beeps** for audio feedback.  
 
-![Circuit Diagram](images/circuit-diagram.jpg)
-
-## 🚀 Features  
-
-- Detects finger movements using **flex sensors**.  
-- Displays corresponding messages like **"TEA", "COFFEE", "NEWSPAPER", etc.** on an LCD.  
-- Generates a **beep sound** for feedback.  
-- Uses **Serial Monitor** to debug sensor values.  
-
-## 🛠️ Installation  
-
-1. Install **Arduino IDE** ([Download here](https://www.arduino.cc/en/software)).  
-2. Connect the **Arduino Uno** to your computer via USB.  
-3. Download this repository and open `code/main.ino` in the Arduino IDE.  
-4. Upload the code to the Arduino.  
-5. Power the Arduino and test the glove functionality.  
-
-## 📜 Code Explanation  
-
-The `main.ino` file reads **analog sensor values** from **A0 to A4** (thumb to little finger). Based on preset value ranges, it displays text messages and beeps.  
+## Code  
 
 ```cpp
-void loop() {
-    a = analogRead(A0); // thumb sensor
-    if (a >= 30 && a <= 40) {
-        Serial.println("TEA");
-        lcd.print("TEA");
-        beep();
-    }
-    delay(250);
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+const int speakerPin = 9;
+
+void setup() {
+    pinMode(A0, INPUT);
+    lcd.begin(16, 2);
 }
-```
 
-The `beep()` function generates a **1000Hz sound** for **100ms** using `tone()` function.
-
-## 🛠️ Future Enhancements  
-
-- Add **Bluetooth/Wi-Fi** to send messages wirelessly.  
-- Implement **Machine Learning** for better gesture recognition.  
-- Use **Text-to-Speech** for spoken output.  
-
-## 📄 License  
-
-This project is licensed under the **MIT License**.
-
----
-
-## 📢 Contribution  
-
-1. Fork the repository.  
-2. Create a new branch (`git checkout -b feature-xyz`).  
-3. Commit changes (`git commit -m 'Added new feature'`).  
-4. Push to the branch (`git push origin feature-xyz`).  
-5. Open a **Pull Request**.  
-
----
-
-## 🔗 Contact  
-
-For queries, reach out via **Email** or **GitHub Issues**.
+void loop() {
+    int thumb = analogRead(A0);
+    if (thumb >= 30 && thumb <= 40) {
+        lcd.print("TEA");
+    }
+}
